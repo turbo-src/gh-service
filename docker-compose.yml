@@ -2,28 +2,27 @@ version: "3.0"
 
 services:
   service:
-    image: namespace-service:latest
+    image: gh-service:latest
     depends_on:
       - db
     ports:
-      - 4003:4003
+      - 4004:4004
     expose:
-      - "4003"
+      - "4004"
     build: ./
     environment:
-      DOCKER_DB_URL: postgresql://user:password@db:5432/namespace-db
+      DOCKER_DB_URL: postgresql://user:password@db:5432/gh-service
     tty: true
-
 
   db:
     image: postgres:13.7-bullseye
     restart: always
     ports:
-      - 5433:5432
+      - 5434:5432
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: namespace-db
+      POSTGRES_DB: gh-service
     volumes:
       - db-data:/db-data/
 

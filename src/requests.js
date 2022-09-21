@@ -4,64 +4,42 @@ require("dotenv").config();
 const port =
   process.env.NODE_ENV === "fly"
     ? "https://namespace-db.fly.dev"
-    : "http://localhost:4003";
+    : "http://localhost:4004";
 
 var root = {
-  postCreateUser: async (
-    owner,
+  postCreateIssue: async (
     repo,
-    contributor_id,
-    contributor_name,
-    contributor_signature
+    issue_id,
+    tsrc_id
   ) => {
     superagent
       .post(`${port}/graphql`)
       .send({
-        query: `{ createUser(owner: "${owner}", repo: "${repo}", contributor_id: "${contributor_id}", contributor_name: "${contributor_name}", contributor_signature: "${contributor_signature}") }`,
+        query: `{ createIssue(repo: "${repo}", issue_id: "${issue_id}", tsrc_id: "${tsrc_id}") }`,
       })
       .set("accept", "json")
-      .end((err, res) => {
-        const json = JSON.parse(res.text);
-        return json.data.createUser;
-      });
+      const json = JSON.parse(res.text);
+      return json.data.createIssue;
   },
-  postGetContributorName: async (owner, repo, pr_id, contributor_id) => {
+  postGetIssueID: async (repo, issue_id) => {
     const res = await superagent
       .post(`${port}/graphql`)
       .send({
-        query: `{ getContributorName(owner: "${owner}", repo: "${repo}", pr_id: "${pr_id}", contributor_id: "${contributor_id}") }`,
+        query: `{ getIssueID(repo: "${repo}", tsrc_id: "${tsrc_id}") }`,
       })
       .set("accept", "json");
-    // .end((err, res) => {
-    //   const json = JSON.parse(res.text);
-    //   return json.data.getContributorName;
-    // });
     const json = JSON.parse(res.text);
-    return json.data.getContributorName;
+    return json.data.getIssueID;
   },
-  postGetContributorID: async (owner, repo, pr_id, contributor_name) => {
+  postGetTsrcID: async (repo, tsrc_id) => {
     const res = await superagent
       .post(`${port}/graphql`)
       .send({
-        query: `{ getContributorID(owner: "${owner}", repo: "${repo}", pr_id: "${pr_id}", contributor_name: "${contributor_name}") }`,
+        query: `{ getTsrcID(repo: "${repo}", tsrc_id: "${tsrc_id}") }`,
       })
       .set("accept", "json");
-    //.end((err, res) => {
-    //});
     const json = JSON.parse(res.text);
-    return json.data.getContributorID;
-  },
-  postGetContributorSignature: async (owner, repo, pr_id, contributor_id) => {
-    const res = await superagent
-      .post(`${port}/graphql`)
-      .send({
-        query: `{ getContributorSignature(owner: "${owner}", repo: "${repo}", pr_id: "${pr_id}", contributor_id: "${contributor_id}") }`,
-      })
-      .set("accept", "json");
-    //.end((err, res) => {
-    //});
-    const json = JSON.parse(res.text);
-    return json.data.getContributorSignature;
+    return json.data.getTsrcID;
   },
 };
 

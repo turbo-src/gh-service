@@ -5,59 +5,43 @@ const { db } = require("./db");
 require("dotenv").config();
 
 const {
-  createUser,
-  getContributorID,
-  getContributorSignature,
-  getContributorName,
+  createIssue,
+  getIssueID,
+  getTsrcID,
 } = require("../lib");
 
 var schema = buildSchema(`
   type Query {
-    createUser(owner: String, repo: String, contributor_id: String, contributor_name: String, contributor_signature: String): String,
-    getContributorName(owner: String, repo: String, pr_id: String, contributor_id: String): String,
-    getContributorID(owner: String, repo: String, pr_id: String, contributor_name: String): String,
-    getContributorSignature(owner: String, repo: String, pr_id: String, contributor_id: String): String,
+    createIssue(repo: String, tsrc_id: String, issue_id: String): String,
+    getIssueID(repo: String, tsrc_id: String,): String,
+    getTsrcID(repo: String, issue_id: String): String,
   }
 `);
 
 var root = {
-  createUser: async (args) => {
-    return await createUser(
-      args.owner,
+  createIssue: async (args) => {
+    return await createIssue(
       args.repo,
-      args.contributor_id,
-      args.contributor_name,
-      args.contributor_signature
+      args.issue_id,
+      args.tsrc_id
     );
   },
-  getContributorName: async (args) => {
-    return await getContributorName(
-      args.owner,
+  getIssueID: async (args) => {
+    let issueID = await getIssueID(
       args.repo,
-      args.pr_id,
-      args.contributor_id
+      args.tsrc_id
     );
+    return issueID;
   },
-  getContributorID: async (args) => {
-    let contributorID = await getContributorID(
-      args.owner,
+  getTsrcID: async (args) => {
+    return await getTsrcID(
       args.repo,
-      args.pr_id,
-      args.contributor_name
-    );
-    return contributorID;
-  },
-  getContributorSignature: async (args) => {
-    return await getContributorSignature(
-      args.owner,
-      args.repo,
-      args.pr_id,
-      args.contributor_id
+      args.issue_id,
     );
   },
 };
 
-const port = process.env.PORT || 4003;
+const port = process.env.PORT || 4004;
 
 const app = express();
 
