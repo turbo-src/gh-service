@@ -1,1 +1,1 @@
-npm test test-server/postCreateIssue.js test-server/postGetIssueID.js test-server/postGetTsrcID.js
+npm test test-server/postCreateIssue.js test-server/postGetIssueID.js test-server/postGetTsrcID.js test-server/duplicateIds.js

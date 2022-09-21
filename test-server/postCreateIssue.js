@@ -15,7 +15,7 @@ describe("postCreateIssue", function () {
     );
     const issue3 =  await postCreateIssue(
       'joseph/demo',
-      'issue2',
+      'issue3',
       '678'
     );
 
