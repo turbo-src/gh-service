@@ -1,30 +1,30 @@
 # Usage
 
-### Build namespace service
+### Build gh-service
 
 ```
-docker build -t namespace-service:latest .
+docker build -t gh-service:latest .
 ```
 
-### Pull postgres image.
+### Pull postgres image if needed.
 
 ```
 docker pull postgres:13.7-bullseye
 
 ```
 
-### Create containers in detatched mode from root directory
+### Create containers from root directory
 
 ```
-docker-compose up -d
+docker-compose up --build
 ```
 
 ### Run tests
 
-Enter bash or shell session in service container (see `docker ps` for name).
+Enter bash or shell session in service container
 
 ```
-docker exec -it <service container> bash
+docker exec -it gh-service-service bash
 ```
 
 Run tests.
