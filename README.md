@@ -42,26 +42,19 @@ docker-compose down
 
 # Functions and their return values if request is successful
 
-### createUser
+### createIssue
 
 ```
 201
 ```
 
-### getContributorID
+### getIssueID
 
 ```
-a string with the contributor id (ethereum address)
+a string with the issue's issueID
 ```
-
-### getContributorName
-
-```
-a string with the contributor's name (github login)
-```
-
-### getContributorSignature
+### getTsrcID
 
 ```
-a string with the contributor's signature (ethereum key)
+a string with the issue's tsrcID
 ```
