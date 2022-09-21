@@ -12,7 +12,7 @@ const {
 
 var schema = buildSchema(`
   type Query {
-    createIssue(repo: String, tsrc_id: String, issue_id: String): String,
+    createIssue(repo: String, issue_id: String, tsrc_id: String): String,
     getIssueID(repo: String, tsrc_id: String,): String,
     getTsrcID(repo: String, issue_id: String): String,
   }
@@ -27,11 +27,10 @@ var root = {
     );
   },
   getIssueID: async (args) => {
-    let issueID = await getIssueID(
+    return issueID = await getIssueID(
       args.repo,
       args.tsrc_id
     );
-    return issueID;
   },
   getTsrcID: async (args) => {
     return await getTsrcID(

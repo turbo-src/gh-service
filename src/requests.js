@@ -12,7 +12,7 @@ var root = {
     issue_id,
     tsrc_id
   ) => {
-    superagent
+  const res = await superagent
       .post(`${port}/graphql`)
       .send({
         query: `{ createIssue(repo: "${repo}", issue_id: "${issue_id}", tsrc_id: "${tsrc_id}") }`,
@@ -21,7 +21,7 @@ var root = {
       const json = JSON.parse(res.text);
       return json.data.createIssue;
   },
-  postGetIssueID: async (repo, issue_id) => {
+  postGetIssueID: async (repo, tsrc_id) => {
     const res = await superagent
       .post(`${port}/graphql`)
       .send({
@@ -31,11 +31,11 @@ var root = {
     const json = JSON.parse(res.text);
     return json.data.getIssueID;
   },
-  postGetTsrcID: async (repo, tsrc_id) => {
+  postGetTsrcID: async (repo, issue_id) => {
     const res = await superagent
       .post(`${port}/graphql`)
       .send({
-        query: `{ getTsrcID(repo: "${repo}", tsrc_id: "${tsrc_id}") }`,
+        query: `{ getTsrcID(repo: "${repo}", issue_id: "${issue_id}") }`,
       })
       .set("accept", "json");
     const json = JSON.parse(res.text);
