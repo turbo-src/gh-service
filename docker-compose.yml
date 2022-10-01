@@ -3,6 +3,7 @@ version: "3.0"
 services:
   service:
     image: gh-service:latest
+    restart: always
     depends_on:
       - db
     ports:
@@ -18,7 +19,7 @@ services:
     image: postgres:13.7-bullseye
     restart: always
     ports:
-      - 5434:5432
+      - 5435:5432
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
