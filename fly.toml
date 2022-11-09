@@ -1,6 +1,6 @@
-# fly.toml file generated for gh-service on 2022-10-07T21:28:41-07:00
+# fly.toml file generated for turbosrc-reibase-gh on 2022-11-03T10:43:30-04:00
 
-app = "gh-service"
+app = "turbosrc-reibase-gh"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

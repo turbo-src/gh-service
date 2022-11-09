@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const port =
   process.env.NODE_ENV === "fly"
-    ? "https://gh-service.fly.dev"
+    ? "https://turbosrc-reibase-gh.fly.dev"
     : "http://localhost:4004";
 
 var root = {
