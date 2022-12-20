@@ -58,17 +58,14 @@ app.use(
   })
 );
 
-try {
-  //Will delete data delete data from db on npm start:
-  db.sync({ force: true });
+// Will clear database data on npm start with {force: true}:
+// db.sync({force:true})
 
-  //Will not delete data from db on npm start:
-  // db.sync();
+// Will NOT clear database data on npm start:
+db.sync().then(() => {
+  console.log('Connection has been established successfully.');
+})
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
 
-  db.authenticate();
-  console.log(
-    "Connection to the Postgres database has been established successfully."
-  );
-} catch (error) {
-  console.error("Unable to connect to the Postgres database:", error);
-}
