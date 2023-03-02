@@ -1,6 +1,6 @@
-# fly.toml file generated for namespace-db on 2022-08-31T10:17:09-04:00
+# fly.toml file generated for turbosrc-reibase-gh on 2022-08-31T10:17:09-04:00
 
-app = "namespace-db"
+app = "turbosrc-reibase-gh"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
