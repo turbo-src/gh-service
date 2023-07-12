@@ -11,10 +11,18 @@ const {
 } = require("../lib");
 
 var schema = buildSchema(`
+
+type Res {
+  status: Int!
+  tsrcID: String!
+  issueID: String!
+  message: String!
+}
+
   type Query {
-    createIssue(repo: String, issue_id: String, tsrc_id: String): String,
-    getIssueID(repo: String, tsrc_id: String,): String,
-    getTsrcID(repo: String, issue_id: String): String,
+    createIssue(repo: String, issue_id: String, tsrc_id: String): Res,
+    getIssueID(repo: String, tsrc_id: String,): Res,
+    getTsrcID(repo: String, issue_id: String): Res,
   }
 `);
 
