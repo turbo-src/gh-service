@@ -15,6 +15,7 @@ RUN npm install --save-dev -y mocha --prefix /usr/local/
 RUN npm install --save-dev -y sequelize --prefix /usr/local/
 RUN npm install --save-dev -y pg pg-hstore --prefix /usr/local/
 RUN npm install --save-dev -y dotenv --prefix /usr/local/
+RUN npm install --save-dev -y octokit@1.7.1 --prefix /usr/local/
 
 COPY . .
 

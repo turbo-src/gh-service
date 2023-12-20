@@ -41,8 +41,10 @@ var root = {
 		const res = await superagent
 			.post(`${port}/graphql`)
 			.send({
-				query: `{ getGitHubPullRequest(owner: "${owner}", repo: "${repo}", pull: "${pull}", accessToken: "${accessToken}")
+				query: `{ getGitHubPullRequest(owner: "${owner}", repo: "${repo}", pull: ${pull}, accessToken: "${accessToken}")
         {
+          status,
+          message,
           url,
           id,
           node_id,
@@ -464,7 +466,7 @@ var root = {
 			})
 			.set("accept", "json");
 		const json = JSON.parse(res.text);
-		return json.data.getTsrcID;
+		return json.data.getGitHubPullRequest;
 	},
 };
 
