@@ -4,7 +4,15 @@ const { buildSchema } = require("graphql");
 const { db } = require("./db");
 require("dotenv").config();
 
-const { createIssue, getIssueID, getTsrcID, getGitHubPullRequest } = require("../lib");
+const {
+	createIssue,
+	getIssueID,
+	getTsrcID,
+	getGitHubPullRequest,
+  mergeGitHubPullRequest,
+  closeGitHubPullRequest,
+  checkGitHubAccessTokenPermissions
+} = require("../lib");
 
 var schema = buildSchema(`
 
@@ -40,11 +48,21 @@ type GitHubPullRequest {
   mergeable: Boolean!
 }
 
+type Permissions {
+  status: Int!
+  message: String!
+  public_repo_scopes: Boolean!
+  push_permissions: Boolean!
+}
+
   type Query {
     createIssue(repo: String, issue_id: String, tsrc_id: String): Res,
     getIssueID(repo: String, tsrc_id: String,): Res,
     getTsrcID(repo: String, issue_id: String): Res,
     getGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): GitHubPullRequest,
+    mergeGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): Res,
+    closeGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): Res,
+    checkGitHubAccessTokenPermissions(owner: String, repo: String, accessToken: String, contributorName: String, instanceToken: String): Permissions,
   }
 `);
 
@@ -59,13 +77,38 @@ var root = {
 		return await getTsrcID(args.repo, args.issue_id);
 	},
 	getGitHubPullRequest: async (args) => {
-	  return await getGitHubPullRequest(
+		return await getGitHubPullRequest(
 			args.owner,
 			args.repo,
 			args.pull,
 			args.accessToken
 		);
-  
+	},
+	mergeGitHubPullRequest: async (args) => {
+		return await mergeGitHubPullRequest(
+			args.owner,
+			args.repo,
+			args.pull,
+			args.accessToken
+		);
+	},
+	closeGitHubPullRequest: async (args) => {
+		return await closeGitHubPullRequest(
+			args.owner,
+			args.repo,
+			args.pull,
+			args.accessToken
+		);
+	},
+	checkGitHubAccessTokenPermissions: async (args) => {
+		const res = await checkGitHubAccessTokenPermissions(
+			args.owner,
+			args.repo,
+			args.accessToken,
+			args.contributorName,
+			args.instanceToken
+		);
+		return res;
 	},
 };
 
