@@ -18,9 +18,8 @@ describe("postCreateIssue", function () {
       'issue3',
       '678'
     );
-
-    assert.equal(issue1, 201, "Failed to create an issue");
-    assert.equal(issue2, 201, "Failed to create an issue");
-    assert.equal(issue3, 201, "Failed to create an issue");
+    assert.equal(issue1.status, 201, "Failed to create an issue");
+    assert.equal(issue2.status, 201, "Failed to create an issue");
+    assert.equal(issue3.status, 201, "Failed to create an issue");
   });
 });

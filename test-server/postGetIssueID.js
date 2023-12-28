@@ -3,7 +3,7 @@ const { postGetIssueID } = require("../src/requests");
 
 describe("postGetIssueID", function () {
   it("should return a Issue's idbased on their TsrcID", async function () {
-    let issueID = await postGetIssueID("joseph/demo", "123");
+    let {issueID} = await postGetIssueID("joseph/demo", "123");
 
     assert.equal(
       issueID,
