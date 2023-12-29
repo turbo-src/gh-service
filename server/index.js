@@ -13,6 +13,8 @@ const {
 	closeGitHubPullRequest,
 	checkGitHubAccessTokenPermissions,
 	verify,
+	createGitHubPullRequest,
+	createGitHubRepoFork,
 } = require("../lib");
 
 var schema = buildSchema(`
@@ -62,6 +64,11 @@ type Verify {
 	message: String!
   }
 
+type BasicRes {
+	status: Int!
+	message: String!
+  }
+
   type Query {
     createIssue(repo: String, issue_id: String, tsrc_id: String): Res,
     getIssueID(repo: String, tsrc_id: String,): Res,
@@ -71,6 +78,8 @@ type Verify {
     closeGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): Res,
     checkGitHubAccessTokenPermissions(owner: String, repo: String, accessToken: String, contributorName: String, instanceToken: String): Permissions,
 	verify(contributorName: String, token: String): Verify,
+	createGitHubPullRequest(owner: String, repo: String, title: String, body: String, forkBranch: String, base: String, accessToken: String): BasicRes,
+	createGitHubRepoFork(owner: String, repo: String, organization: String, name: String, defaultBranchOnly: Boolean, accessToken: String): BasicRes,
 }
 `);
 
@@ -120,6 +129,29 @@ var root = {
 	},
 	verify: async (args) => {
 		const res = await verify(args.contributorName, args.token);
+		return res;
+	},
+	createGitHubPullRequest: async (args) => {
+		const res = await createkGitHubPullcreateGitHubPullRequest(
+			args.owner,
+			args.repo,
+			args.title,
+			args.body,
+			args.forkBranch,
+			args.base,
+			args.accessToken
+		);
+		return res;
+	},
+	createGitHubRepoFork: async (args) => {
+		const res = await createkGitHubPullcreateGitHubRepoFork(
+			args.owner,
+			args.repo,
+			args.organization,
+			args.name,
+			args.defaultBranchOnly,
+			args.accessToken
+		);
 		return res;
 	},
 };
