@@ -9,9 +9,10 @@ const {
 	getIssueID,
 	getTsrcID,
 	getGitHubPullRequest,
-  mergeGitHubPullRequest,
-  closeGitHubPullRequest,
-  checkGitHubAccessTokenPermissions
+	mergeGitHubPullRequest,
+	closeGitHubPullRequest,
+	checkGitHubAccessTokenPermissions,
+	verify,
 } = require("../lib");
 
 var schema = buildSchema(`
@@ -55,6 +56,12 @@ type Permissions {
   push_permissions: Boolean!
 }
 
+type Verify {
+	status: Int!
+	verified: Boolean!
+	message: String!
+  }
+
   type Query {
     createIssue(repo: String, issue_id: String, tsrc_id: String): Res,
     getIssueID(repo: String, tsrc_id: String,): Res,
@@ -63,7 +70,8 @@ type Permissions {
     mergeGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): Res,
     closeGitHubPullRequest(owner: String, repo: String, pull: Int, accessToken: String): Res,
     checkGitHubAccessTokenPermissions(owner: String, repo: String, accessToken: String, contributorName: String, instanceToken: String): Permissions,
-  }
+	verify(contributorName: String, token: String): Verify,
+}
 `);
 
 var root = {
@@ -108,6 +116,10 @@ var root = {
 			args.contributorName,
 			args.instanceToken
 		);
+		return res;
+	},
+	verify: async (args) => {
+		const res = await verify(args.contributorName, args.token);
 		return res;
 	},
 };
