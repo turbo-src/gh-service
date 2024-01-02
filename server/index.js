@@ -26,10 +26,15 @@ type Res {
   message: String!
 }
 
+type Repo {
+	git_url: String!
+}
+
 type GitHubPullRequestHead {
   label: String!
   ref: String!
   sha: String!
+  repo: Repo!
 }
 
 type GitHubPullRequestBase {
